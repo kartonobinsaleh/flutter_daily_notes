@@ -3,18 +3,27 @@ import 'package:flutter_todo_list/constants/colors.dart';
 
 class CustomButton extends StatelessWidget {
   final String text;
-  const CustomButton({required this.text, super.key});
+  final VoidCallback onPressed;
+  final Color? backgroundColor;
+
+  const CustomButton({
+    required this.text,
+    required this.onPressed,
+    this.backgroundColor,
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 10),
+    return InkWell(
+      onTap: onPressed,
+      borderRadius: BorderRadius.circular(10),
       child: Container(
         alignment: Alignment.center,
         width: double.infinity,
         height: 50,
         decoration: BoxDecoration(
-          color: primaryColor,
+          color: backgroundColor ?? primaryColor,
           borderRadius: BorderRadius.circular(10),
         ),
         child: Text(

@@ -5,13 +5,15 @@ class CustomTextfield extends StatelessWidget {
   final TextEditingController controller;
   final FocusNode focusNode;
   final String hintText;
-  final IconData icon;
+  final IconData? icon;
+  final int maxLines;
 
   const CustomTextfield({
     required this.controller,
     required this.focusNode,
     required this.hintText,
-    required this.icon,
+    this.icon,
+    this.maxLines = 1,
     super.key,
   });
 
@@ -27,12 +29,15 @@ class CustomTextfield extends StatelessWidget {
         child: TextField(
           controller: controller,
           focusNode: focusNode,
+          maxLines: maxLines,
           style: const TextStyle(fontSize: 16, color: Colors.black),
           decoration: InputDecoration(
-              prefixIcon: Icon(
-                icon,
-                color: focusNode.hasFocus ? primaryColor : const Color(0xffc5c5c5),
-              ),
+              prefixIcon: icon != null
+                  ? Icon(
+                      icon,
+                      color: focusNode.hasFocus ? primaryColor : const Color(0xffc5c5c5),
+                    )
+                  : null,
               contentPadding: const EdgeInsets.symmetric(horizontal: 15, vertical: 15),
               hintText: hintText,
               enabledBorder: OutlineInputBorder(
