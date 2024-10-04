@@ -67,7 +67,6 @@ class _TaskItemState extends State<TaskItem> {
                             })
                       ],
                     ),
-                    const SizedBox(height: 4),
                     Text(
                       "deskripsi",
                       style: TextStyle(
