@@ -5,7 +5,8 @@ import 'package:flutter_todo_list/widgets/custom_ilustration.dart';
 import 'package:flutter_todo_list/widgets/custom_textfield.dart';
 
 class SignUpPage extends StatefulWidget {
-  const SignUpPage({super.key});
+  final VoidCallback show;
+  const SignUpPage(this.show, {super.key});
 
   @override
   State<SignUpPage> createState() => _SignUpPageState();
@@ -72,10 +73,16 @@ class _SignUpPageState extends State<SignUpPage> {
               CustomAccountText(
                 questionText: "Do you have an account?",
                 actionText: "Login",
-                onActionTap: () {},
+                onActionTap: () => widget.show(),
               ),
               const SizedBox(height: 20),
-              const CustomButton(text: "Sign Up"),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 10),
+                child: CustomButton(
+                  text: "Sign Up",
+                  onPressed: () {},
+                ),
+              ),
             ],
           ),
         ),
