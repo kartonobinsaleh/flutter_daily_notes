@@ -5,7 +5,8 @@ import 'package:flutter_todo_list/widgets/custom_ilustration.dart';
 import 'package:flutter_todo_list/widgets/custom_textfield.dart';
 
 class LoginPage extends StatefulWidget {
-  const LoginPage({super.key});
+  final VoidCallback show;
+  const LoginPage(this.show, {super.key});
 
   @override
   State<LoginPage> createState() => _LoginPageState();
@@ -38,9 +39,13 @@ class _LoginPageState extends State<LoginPage> {
           child: Column(
             children: [
               const SizedBox(height: 20),
-              const CustomIlustration(
-                imagePath: 'images/schedule_meeting.png',
-                height: 300,
+              const Padding(
+                padding: EdgeInsets.symmetric(horizontal: 10),
+                child: CustomIlustration(
+                  imagePath: 'images/schedule_meeting.png',
+                  width: double.infinity,
+                  height: 300,
+                ),
               ),
               const SizedBox(height: 50),
               CustomTextfield(
@@ -60,10 +65,16 @@ class _LoginPageState extends State<LoginPage> {
               CustomAccountText(
                 questionText: "Don't have an account?",
                 actionText: "Sign Up",
-                onActionTap: () {},
+                onActionTap: () => widget.show(),
               ),
               const SizedBox(height: 20),
-              const CustomButton(text: "Login"),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 10),
+                child: CustomButton(
+                  text: "Login",
+                  onPressed: () {},
+                ),
+              ),
             ],
           ),
         ),
