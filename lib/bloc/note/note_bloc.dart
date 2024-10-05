@@ -1,5 +1,5 @@
 import 'package:equatable/equatable.dart';
-import 'package:flutter_todo_list/data/note.dart';
+import 'package:flutter_todo_list/models/note.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
 
 part 'note_event.dart';

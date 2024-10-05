@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_todo_list/data/note.dart';
+import 'package:flutter_todo_list/models/note.dart';
 import 'package:flutter_todo_list/screens/add_note_page.dart';
 import 'package:flutter_todo_list/widgets/custom_ilustration.dart';
 
