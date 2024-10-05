@@ -6,6 +6,7 @@ class CustomTextfield extends StatelessWidget {
   final String hintText;
   final IconData? icon;
   final int maxLines;
+  final bool obscureText;
 
   const CustomTextfield({
     required this.controller,
@@ -14,6 +15,7 @@ class CustomTextfield extends StatelessWidget {
     this.icon,
     this.maxLines = 1,
     super.key,
+    this.obscureText = false,
   });
 
   @override
@@ -29,6 +31,7 @@ class CustomTextfield extends StatelessWidget {
           controller: controller,
           focusNode: focusNode,
           maxLines: maxLines,
+          obscureText: obscureText,
           style: const TextStyle(fontSize: 16, color: Colors.black),
           decoration: InputDecoration(
               prefixIcon: icon != null

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_todo_list/models/note.dart';
+import 'package:flutter_todo_list/data/models/note.dart';
 import 'package:flutter_todo_list/screens/add_note_page.dart';
 import 'package:flutter_todo_list/widgets/custom_ilustration.dart';
 
@@ -41,8 +41,8 @@ class _TaskItemState extends State<TaskItem> {
           padding: const EdgeInsets.symmetric(horizontal: 10),
           child: Row(
             children: [
-              const CustomIlustration(
-                imagePath: 'images/schedule_meeting.png',
+              CustomIlustration(
+                imagePath: 'images/${widget.note.image}.png',
                 width: 130,
                 height: 100,
               ),
@@ -51,24 +51,12 @@ class _TaskItemState extends State<TaskItem> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          widget.note.title,
-                          style: const TextStyle(
-                            fontSize: 18,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                        Checkbox(
-                            value: isDone,
-                            onChanged: (value) {
-                              setState(() {
-                                isDone = !isDone;
-                              });
-                            })
-                      ],
+                    Text(
+                      widget.note.title,
+                      style: const TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
                     Text(
                       widget.note.description,
@@ -78,26 +66,15 @@ class _TaskItemState extends State<TaskItem> {
                         color: Colors.grey[500],
                       ),
                     ),
-                    const Spacer(),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 12),
-                      child: Row(
-                        children: [
-                          actionButton('images/icon_time.png', "time", Theme.of(context).colorScheme.primary, () {}),
-                          const SizedBox(width: 10),
-                          actionButton('images/icon_edit.png', "edit", const Color(0xffc5c5c5), () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => AddNotePage(
-                                  note: widget.note,
-                                ),
-                              ),
-                            );
-                          }),
-                        ],
-                      ),
-                    )
+                    Builder(builder: (context) {
+                      final date = widget.note.date;
+                      if (date == null) return const SizedBox();
+                      final time = TimeOfDay.fromDateTime(date);
+                      return Text(
+                        date.day.toString() + '/' + date.month.toString() + '/' + date.year.toString() + ' ' + time.hour.toString() + ':' + time.minute.toString(),
+                      );
+                      //  actionButton('images/icon_time.png', widget.note.date?.toIso8601String() ?? '', Theme.of(context).colorScheme.primary, () {});
+                    })
                   ],
                 ),
               )
@@ -109,35 +86,25 @@ class _TaskItemState extends State<TaskItem> {
   }
 
   Widget actionButton(String imagePath, String label, Color backgroundColor, Function() onPressed) {
-    return InkWell(
-      onTap: onPressed,
-      child: Container(
-        width: 90,
-        height: 28,
-        decoration: BoxDecoration(
-          color: backgroundColor,
-          borderRadius: BorderRadius.circular(18),
-        ),
-        child: Padding(
-          padding: const EdgeInsets.symmetric(
-            horizontal: 12,
-            vertical: 4,
-          ),
-          child: Row(
-            children: [
-              Image.asset(imagePath),
-              const SizedBox(width: 10),
-              Text(
-                label,
-                style: const TextStyle(
-                  fontSize: 14,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.white,
-                ),
+    return Padding(
+      padding: const EdgeInsets.symmetric(
+        horizontal: 12,
+      ),
+      child: Row(
+        children: [
+          Image.asset(imagePath),
+          const SizedBox(width: 10),
+          Expanded(
+            child: Text(
+              label,
+              style: const TextStyle(
+                fontSize: 14,
+                fontWeight: FontWeight.bold,
+                color: Colors.white,
               ),
-            ],
+            ),
           ),
-        ),
+        ],
       ),
     );
   }

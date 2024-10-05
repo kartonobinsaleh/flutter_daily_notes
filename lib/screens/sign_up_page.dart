@@ -1,37 +1,41 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_todo_list/bloc/auth/auth_bloc.dart';
+import 'package:flutter_todo_list/data/models/user.dart';
+import 'package:flutter_todo_list/extensions/router.dart';
+import 'package:flutter_todo_list/screens/login_page.dart';
 import 'package:flutter_todo_list/widgets/custom_account_text.dart';
 import 'package:flutter_todo_list/widgets/custom_button.dart';
 import 'package:flutter_todo_list/widgets/custom_ilustration.dart';
 import 'package:flutter_todo_list/widgets/custom_textfield.dart';
 
 class SignUpPage extends StatefulWidget {
-  final VoidCallback show;
-  const SignUpPage(this.show, {super.key});
+  const SignUpPage({super.key});
 
   @override
   State<SignUpPage> createState() => _SignUpPageState();
 }
 
 class _SignUpPageState extends State<SignUpPage> {
-  final _focusNode1 = FocusNode();
-  final _focusNode2 = FocusNode();
-  final _focusNode3 = FocusNode();
+  final _usernameFocusNode = FocusNode();
+  final _passwordFocusNode = FocusNode();
+  final _passwordConfirmFocusNode = FocusNode();
 
-  final email = TextEditingController();
-  final password = TextEditingController();
-  final passwordConfirm = TextEditingController();
+  final _usernameController = TextEditingController();
+  final _passwordController = TextEditingController();
+  final passwordConfirmController = TextEditingController();
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    _focusNode1.addListener(() {
+    _usernameFocusNode.addListener(() {
       setState(() {});
     });
-    _focusNode2.addListener(() {
+    _passwordFocusNode.addListener(() {
       setState(() {});
     });
-    _focusNode3.addListener(() {
+    _passwordConfirmFocusNode.addListener(() {
       setState(() {});
     });
   }
@@ -39,51 +43,73 @@ class _SignUpPageState extends State<SignUpPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SafeArea(
-        child: SingleChildScrollView(
-          child: Column(
-            children: [
-              const SizedBox(height: 20),
-              const CustomIlustration(
-                imagePath: 'images/schedule_meeting.png',
-                height: 300,
-              ),
-              const SizedBox(height: 50),
-              CustomTextfield(
-                controller: email,
-                focusNode: _focusNode1,
-                hintText: "Email",
-                icon: Icons.email,
-              ),
-              const SizedBox(height: 10),
-              CustomTextfield(
-                controller: password,
-                focusNode: _focusNode2,
-                hintText: "Password",
-                icon: Icons.password,
-              ),
-              const SizedBox(height: 10),
-              CustomTextfield(
-                controller: passwordConfirm,
-                focusNode: _focusNode3,
-                hintText: "Password Confirm",
-                icon: Icons.password,
-              ),
-              const SizedBox(height: 8),
-              CustomAccountText(
-                questionText: "Do you have an account?",
-                actionText: "Login",
-                onActionTap: () => widget.show(),
-              ),
-              const SizedBox(height: 20),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 10),
-                child: CustomButton(
-                  text: "Sign Up",
-                  onPressed: () {},
+      body: BlocListener<AuthBloc, AuthState>(
+        listener: (context, state) {
+          final success = state.status == AuthStatus.success;
+          final error = state.status == AuthStatus.error;
+
+          if (success || error) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(content: Text(state.message)),
+            );
+          }
+
+          if (success) context.offAll(const LoginPage());
+        },
+        child: SafeArea(
+          child: SingleChildScrollView(
+            child: Column(
+              children: [
+                const SizedBox(height: 20),
+                const CustomIlustration(
+                  imagePath: 'images/schedule_meeting.png',
+                  height: 300,
                 ),
-              ),
-            ],
+                const SizedBox(height: 50),
+                CustomTextfield(
+                  controller: _usernameController,
+                  focusNode: _usernameFocusNode,
+                  hintText: "Username",
+                  icon: Icons.person,
+                ),
+                const SizedBox(height: 10),
+                CustomTextfield(
+                  controller: _passwordController,
+                  focusNode: _passwordFocusNode,
+                  obscureText: true,
+                  hintText: "Password",
+                  icon: Icons.password,
+                ),
+                const SizedBox(height: 10),
+                CustomTextfield(
+                  controller: passwordConfirmController,
+                  focusNode: _passwordConfirmFocusNode,
+                  obscureText: true,
+                  hintText: "Password Confirm",
+                  icon: Icons.password,
+                ),
+                const SizedBox(height: 8),
+                CustomAccountText(
+                  questionText: "Do you have an account?",
+                  actionText: "Login",
+                  onActionTap: () => Navigator.pop(context),
+                ),
+                const SizedBox(height: 20),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 10),
+                  child: CustomButton(
+                    text: "Sign Up",
+                    onPressed: () {
+                      final newUser = User(
+                        username: _usernameController.text,
+                        password: _passwordController.text,
+                      );
+                      context.read<AuthBloc>().add(AuthSignup(newUser, passwordConfirmController.text));
+                    },
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       ),
