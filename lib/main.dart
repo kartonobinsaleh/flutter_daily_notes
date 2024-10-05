@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_todo_list/auth/auth_page.dart';
+import 'package:flutter_todo_list/screens/auth_page.dart';
 import 'package:flutter_todo_list/bloc/note/note_bloc.dart';
 import 'package:flutter_todo_list/screens/add_note_page.dart';
 import 'package:flutter_todo_list/screens/detail_note_page.dart';
