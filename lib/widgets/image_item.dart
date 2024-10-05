@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_todo_list/constants/colors.dart';
 
 class ImageItem extends StatelessWidget {
   final int index;
@@ -24,7 +23,7 @@ class ImageItem extends StatelessWidget {
           borderRadius: BorderRadius.circular(10),
           border: Border.all(
             width: 2,
-            color: isSelected ? primaryColor : const Color(0xffc5c5c5),
+            color: isSelected ? Theme.of(context).colorScheme.primary : const Color(0xffc5c5c5),
           ),
         ),
         child: Column(

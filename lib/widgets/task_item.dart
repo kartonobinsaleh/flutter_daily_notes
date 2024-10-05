@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_todo_list/constants/colors.dart';
+import 'package:flutter_todo_list/data/note.dart';
+import 'package:flutter_todo_list/screens/add_note_page.dart';
 import 'package:flutter_todo_list/widgets/custom_ilustration.dart';
 
 class TaskItem extends StatefulWidget {
-  const TaskItem({super.key});
+  final Note note;
+
+  const TaskItem({required this.note, super.key});
 
   @override
   State<TaskItem> createState() => _TaskItemState();
@@ -51,9 +54,9 @@ class _TaskItemState extends State<TaskItem> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        const Text(
-                          "Title",
-                          style: TextStyle(
+                        Text(
+                          widget.note.title,
+                          style: const TextStyle(
                             fontSize: 18,
                             fontWeight: FontWeight.bold,
                           ),
@@ -68,7 +71,7 @@ class _TaskItemState extends State<TaskItem> {
                       ],
                     ),
                     Text(
-                      "deskripsi",
+                      widget.note.description,
                       style: TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.w400,
@@ -80,9 +83,18 @@ class _TaskItemState extends State<TaskItem> {
                       padding: const EdgeInsets.symmetric(vertical: 12),
                       child: Row(
                         children: [
-                          actionButton('images/icon_time.png', "time", primaryColor, () {}),
+                          actionButton('images/icon_time.png', "time", Theme.of(context).colorScheme.primary, () {}),
                           const SizedBox(width: 10),
-                          actionButton('images/icon_edit.png', "edit", const Color(0xffc5c5c5), () {}),
+                          actionButton('images/icon_edit.png', "edit", const Color(0xffc5c5c5), () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => AddNotePage(
+                                  note: widget.note,
+                                ),
+                              ),
+                            );
+                          }),
                         ],
                       ),
                     )

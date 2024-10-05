@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_todo_list/constants/colors.dart';
 
 class CustomAccountText extends StatelessWidget {
   final String questionText;
@@ -33,7 +32,7 @@ class CustomAccountText extends StatelessWidget {
             child: Text(
               actionText,
               style: TextStyle(
-                color: primaryColor,
+                color: Theme.of(context).colorScheme.primary,
                 fontSize: 14,
                 fontWeight: FontWeight.bold,
               ),

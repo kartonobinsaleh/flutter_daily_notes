@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import 'package:flutter_todo_list/constants/colors.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_todo_list/bloc/note/note_bloc.dart';
+import 'package:flutter_todo_list/data/note.dart';
 import 'package:flutter_todo_list/screens/add_note_page.dart';
 import 'package:flutter_todo_list/widgets/task_item.dart';
 
@@ -14,35 +16,52 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   bool show = true;
 
+  removeNote(Note note) {
+    context.read<NoteBloc>().add(RemoveNote(note));
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SafeArea(
-        child: NotificationListener<UserScrollNotification>(
-          onNotification: (notification) {
-            if (notification.direction == ScrollDirection.forward) {
-              setState(
-                () {
-                  show = true;
+      body: BlocBuilder<NoteBloc, NoteState>(
+        builder: (context, state) {
+          if (state.status == NoteStatus.initial) {
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
+          } else if (state.status == NoteStatus.success) {
+            return SafeArea(
+              child: NotificationListener<UserScrollNotification>(
+                onNotification: (notification) {
+                  if (notification.direction == ScrollDirection.forward) {
+                    setState(
+                      () {
+                        show = true;
+                      },
+                    );
+                  }
+                  if (notification.direction == ScrollDirection.reverse) {
+                    setState(
+                      () {
+                        show = false;
+                      },
+                    );
+                  }
+                  return true;
                 },
-              );
-            }
-            if (notification.direction == ScrollDirection.reverse) {
-              setState(
-                () {
-                  show = false;
-                },
-              );
-            }
-            return true;
-          },
-          child: ListView.builder(
-            itemBuilder: (context, index) {
-              return TaskItem();
-            },
-            itemCount: 10,
-          ),
-        ),
+                child: ListView.builder(
+                  itemCount: state.notes.length,
+                  itemBuilder: (context, index) {
+                    final note = state.notes[index];
+                    return TaskItem(note: note);
+                  },
+                ),
+              ),
+            );
+          } else {
+            return Container();
+          }
+        },
       ),
       floatingActionButton: Visibility(
         visible: show,
@@ -54,7 +73,7 @@ class _HomePageState extends State<HomePage> {
               ),
             );
           },
-          backgroundColor: primaryColor,
+          backgroundColor: Theme.of(context).colorScheme.primary,
           shape: const CircleBorder(),
           child: const Icon(
             Icons.add,
