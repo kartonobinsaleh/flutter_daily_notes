@@ -7,8 +7,6 @@ abstract class NoteEvent extends Equatable {
   List<Object?> get props => [];
 }
 
-class NoteStarted extends NoteEvent {}
-
 class AddNote extends NoteEvent {
   final Note note;
 
@@ -38,4 +36,12 @@ class UpdateNote extends NoteEvent {
 
   @override
   List<Object?> get props => [noteId, updatedNote];
+}
+
+class ClearNotes extends NoteEvent {
+  const ClearNotes();
+}
+
+class LoadNotes extends NoteEvent {
+  const LoadNotes();
 }
