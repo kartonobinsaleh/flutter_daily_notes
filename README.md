@@ -96,7 +96,7 @@ Setiap catatan ditampilkan dalam bentuk **Note Item** yang berisi **judul** dan 
 
 Untuk menambah catatan baru, tekan tombol icon **Tambah** di bagian bawah navigasi.  
 Anda akan diarahkan ke **Halaman Tambah Catatan (Add Note)**.  
-Isi **judul** dan **konten** catatan Anda, lalu tekan tombol **Add Note** untuk menyimpan catatan.
+Isi **judul** dan **konten** catatan Anda, serta **tanggal**  dan **waktu** lalu tekan tombol **Add Note** untuk menyimpan catatan.
 
 ### 2.4. Melihat dan Mengedit Catatan
 
