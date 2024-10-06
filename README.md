@@ -1,4 +1,6 @@
-# Struktur Proyek `lib`
+# Struktur Proyek dan Dokumentasi Penggunaan Aplikasi
+
+
 
 ## Deskripsi Proyek
 
@@ -20,6 +22,8 @@
 - **Intl**: Untuk internasionalisasi dan format tanggal/waktu.
 - **Cupertino Icons**: Ikon untuk gaya iOS.
 - **Alarm**: Untuk mengatur alarm.
+
+## Struktur Proyek
 
 ## 1. lib/
 
@@ -72,3 +76,6 @@
 - **auth_state.dart**: Mendefinisikan state terkait otentikasi pengguna.
 
 Struktur proyek ini memisahkan dengan jelas antara model data, logika bisnis, dan tampilan, mengikuti praktik pengembangan yang baik.
+
+## Dokumentasi Penggunaan Aplikasi
+
