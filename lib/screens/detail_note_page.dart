@@ -26,63 +26,68 @@ class _DetailNotePageState extends State<DetailNotePage> {
         centerTitle: true,
         title: const Text('Detail Note'),
       ),
-      body: SafeArea(
-        child: SingleChildScrollView(
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 10),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                SizedBox(
-                  height: 250,
-                  width: double.infinity,
-                  child: Image.asset(
-                    'assets/images/1.png',
-                    fit: BoxFit.cover,
-                    height: 100,
-                    width: double.infinity,
-                  ),
-                ),
-                const SizedBox(height: 10),
-                Row(
-                  crossAxisAlignment: CrossAxisAlignment.center,
+      body: BlocBuilder<NoteBloc, NoteState>(
+        builder: (context, state) {
+          final note = state.notes.firstWhere((note) => note.id == widget.note.id);
+          return SafeArea(
+            child: SingleChildScrollView(
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 10),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Icon(
-                      Icons.alarm,
-                      color: Theme.of(context).colorScheme.primary,
-                    ),
-                    const SizedBox(width: 8), // Jarak antara ikon dan teks
-                    Text(
-                      DateFormat('dd MMMM yyyy HH:mm').format(widget.note.date!),
-                      style: TextStyle(
-                        fontSize: 14,
-                        color: Theme.of(context).colorScheme.primary,
+                    SizedBox(
+                      height: 250,
+                      width: double.infinity,
+                      child: Image.asset(
+                        'assets/images/${note.image}.png',
+                        fit: BoxFit.cover,
+                        height: 100,
+                        width: double.infinity,
                       ),
                     ),
+                    const SizedBox(height: 10),
+                    Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Icon(
+                          Icons.alarm,
+                          color: Theme.of(context).colorScheme.primary,
+                        ),
+                        const SizedBox(width: 8), // Jarak antara ikon dan teks
+                        Text(
+                          DateFormat('dd MMMM yyyy HH:mm').format(note.date!),
+                          style: TextStyle(
+                            fontSize: 14,
+                            color: Theme.of(context).colorScheme.primary,
+                          ),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 10),
+                    Text(
+                      note.title,
+                      style: const TextStyle(
+                        fontSize: 24,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    const SizedBox(height: 10),
+                    Text(
+                      note.description,
+                      textAlign: TextAlign.justify,
+                      style: const TextStyle(
+                        fontSize: 16,
+                        color: Colors.black54,
+                      ),
+                    ),
+                    const SizedBox(height: 10),
                   ],
                 ),
-                const SizedBox(height: 10),
-                Text(
-                  widget.note.title,
-                  style: const TextStyle(
-                    fontSize: 24,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                const SizedBox(height: 10),
-                Text(
-                  widget.note.description,
-                  textAlign: TextAlign.justify,
-                  style: const TextStyle(
-                    fontSize: 16,
-                    color: Colors.black54,
-                  ),
-                ),
-                const SizedBox(height: 10),
-              ],
+              ),
             ),
-          ),
-        ),
+          );
+        },
       ),
       bottomNavigationBar: BottomAppBar(
         color: Colors.white,
