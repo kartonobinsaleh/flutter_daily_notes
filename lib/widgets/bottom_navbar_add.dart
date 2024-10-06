@@ -7,7 +7,7 @@ import 'package:flutter_daily_notes/bloc/note/note_bloc.dart';
 import 'package:flutter_daily_notes/models/note.dart';
 import 'package:flutter_daily_notes/widgets/custom_button.dart';
 
-class BottomNavbarAdd extends StatelessWidget {
+class BottomNavbarAdd extends StatefulWidget {
   final TextEditingController titleController;
   final TextEditingController descController;
   final int tapIndex;
@@ -25,34 +25,39 @@ class BottomNavbarAdd extends StatelessWidget {
   });
 
   @override
+  State<BottomNavbarAdd> createState() => _BottomNavbarAddState();
+}
+
+class _BottomNavbarAddState extends State<BottomNavbarAdd> {
+  @override
   Widget build(BuildContext context) {
     final noteBloc = BlocProvider.of<NoteBloc>(context);
     return BottomAppBar(
       color: Colors.white,
       child: CustomButton(
-        text: note == null ? "Add Note" : "Update Note",
+        text: widget.note == null ? "Add Note" : "Update Note",
         onPressed: () async {
           try {
-            if (titleController.text.isEmpty) throw "Please enter a title";
-            if (descController.text.isEmpty) throw "Please enter a description";
-            if (selectedDate != null && selectedTime == null) throw "Please pick a time";
+            if (widget.titleController.text.isEmpty) throw "Please enter a title";
+            if (widget.descController.text.isEmpty) throw "Please enter a description";
+            if (widget.selectedDate != null && widget.selectedTime == null) throw "Please pick a time";
 
             final now = DateTime.now();
 
-            if (selectedDate != null && (selectedDate?.isBefore(now) ?? false)) {
+            if (widget.selectedDate != null && (widget.selectedDate?.isBefore(now) ?? false)) {
               throw "Please pick a date in the future";
             }
 
-            if (note == null) {
+            if (widget.note == null) {
               final newId = DateTime.now().hashCode.abs();
               await _setAlarm(newId);
 
               final newNote = Note(
                 id: newId,
-                title: titleController.text,
-                description: descController.text,
-                date: selectedDate,
-                image: tapIndex,
+                title: widget.titleController.text,
+                description: widget.descController.text,
+                date: widget.selectedDate,
+                image: widget.tapIndex,
               );
 
               noteBloc.add(AddNote(newNote));
@@ -63,17 +68,18 @@ class BottomNavbarAdd extends StatelessWidget {
                 ),
               );
             } else {
-              await Alarm.stop(note!.id);
-              await _setAlarm(note!.id);
+              await Alarm.stop(widget.note!.id);
+              await _setAlarm(widget.note!.id);
 
-              final updatedNote = note!.copyWith(
-                title: titleController.text,
-                description: descController.text,
-                date: selectedDate,
-                image: note?.image,
+              final updatedNote = widget.note!.copyWith(
+                title: widget.titleController.text,
+                description: widget.descController.text,
+                date: widget.selectedDate,
+                image: widget.tapIndex,
               );
+              // throw updatedNote;
               noteBloc.add(UpdateNote(
-                noteId: note!.id,
+                noteId: widget.note!.id,
                 updatedNote: updatedNote,
               ));
               ScaffoldMessenger.of(context).showSnackBar(
@@ -82,8 +88,8 @@ class BottomNavbarAdd extends StatelessWidget {
                 ),
               );
             }
-            titleController.clear();
-            descController.clear();
+            widget.titleController.clear();
+            widget.descController.clear();
             Navigator.pop(context);
           } catch (e) {
             ScaffoldMessenger.of(context).showSnackBar(
@@ -98,11 +104,11 @@ class BottomNavbarAdd extends StatelessWidget {
   }
 
   Future<void> _setAlarm(int id) async {
-    if (selectedDate != null) {
+    if (widget.selectedDate != null) {
       await Alarm.set(
         alarmSettings: AlarmSettings(
           id: id,
-          dateTime: selectedDate!,
+          dateTime: widget.selectedDate!,
           assetAudioPath: 'assets/alarm.mp3',
           loopAudio: true,
           vibrate: true,
@@ -110,8 +116,8 @@ class BottomNavbarAdd extends StatelessWidget {
           fadeDuration: .0,
           warningNotificationOnKill: Platform.isIOS,
           notificationSettings: NotificationSettings(
-            title: titleController.text,
-            body: descController.text,
+            title: widget.titleController.text,
+            body: widget.descController.text,
             stopButton: "Stop",
           ),
         ),
