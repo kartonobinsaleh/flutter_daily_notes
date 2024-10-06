@@ -18,7 +18,6 @@
 - **Path Provider**: Menyediakan akses ke lokasi penyimpanan.
 - **Crypto**: Untuk hashing dan enkripsi.
 - **Intl**: Untuk internasionalisasi dan format tanggal/waktu.
-- **Cupertino Icons**: Ikon untuk gaya iOS.
 - **Alarm**: Untuk mengatur alarm.
 
 ## Struktur Proyek
@@ -105,4 +104,3 @@ Pengingat ini akan memberi **notifikasi** saat waktunya tiba.
 
 ### 2.6. Logout
 Untuk keluar dari aplikasi, tekan tombol **Profil** di bagian kanan atas layar, lalu pilih **Logout**.
-"""
