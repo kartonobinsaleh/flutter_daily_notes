@@ -41,14 +41,14 @@ class _SignUpPageState extends State<SignUpPage> {
   }
 
   @override
+
   Widget build(BuildContext context) {
     return Scaffold(
       body: BlocListener<AuthBloc, AuthState>(
         listener: (context, state) {
           final success = state.status == AuthStatus.success;
-          final error = state.status == AuthStatus.error;
 
-          if (success || error) {
+          if (success) {
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(content: Text(state.message)),
             );

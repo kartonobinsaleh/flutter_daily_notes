@@ -38,11 +38,9 @@ class BottomNavbarAdd extends StatelessWidget {
             if (selectedDate != null && selectedTime == null) throw "Please pick a time";
 
             final now = DateTime.now();
-            if (selectedDate!.isBefore(now)) {
-              ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(content: Text('The date & time cannot be in the past')),
-              );
-              return;
+
+            if (selectedDate != null && (selectedDate?.isBefore(now) ?? false)) {
+              throw "Please pick a date in the future";
             }
 
             if (note == null) {

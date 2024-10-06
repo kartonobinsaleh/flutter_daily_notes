@@ -18,15 +18,15 @@ class AuthBloc extends HydratedBloc<AuthEvent, AuthState> {
     emit(state.copyWith(status: AuthStatus.loading));
 
     try {
-      if (event.user.username.isEmpty) throw "Username Tidak Boleh Kosong";
-      if (event.user.password.isEmpty) throw "Password Tidak Boleh Kosong";
+      if (event.user.username.isEmpty) throw "Username can't empty";
+      if (event.user.password.isEmpty) throw "Password can't empty";
 
       final isExisting = state.users.firstWhereOrNull((e) => e.username == event.user.username);
-      if (isExisting == null) throw "Username Tidak Terdaftar";
+      if (isExisting == null) throw "Username or Password is wrong";
 
       final passwordHashed = PasswordHelper.hash(event.user.password);
 
-      if (isExisting.password != passwordHashed) throw "Password Salah";
+      if (isExisting.password != passwordHashed) throw "Password or Username is wrong";
 
       emit(state.copyWith(
         status: AuthStatus.success,
@@ -46,14 +46,14 @@ class AuthBloc extends HydratedBloc<AuthEvent, AuthState> {
 
     try {
       final isExisting = state.users.any((e) => e.username == event.user.username);
-      if (isExisting) throw "Username Sudah Terdaftar";
+      if (isExisting) throw "Username already exists";
 
       List<User> temp = List.from(state.users);
 
-      if (event.user.username.isEmpty) throw "Username Tidak Boleh Kosong";
-      if (event.user.password.isEmpty) throw "Password Tidak Boleh Kosong";
-      if (event.passwordConfirm.isEmpty) throw "Password Confirm Tidak Boleh Kosong";
-      if (event.user.password != event.passwordConfirm) throw "Password Tidak Cocok";
+      if (event.user.username.isEmpty) throw "Username can't empty";
+      if (event.user.password.isEmpty) throw "Password can't empty";
+      if (event.passwordConfirm.isEmpty) throw "Password Confirm can't empty";
+      if (event.user.password != event.passwordConfirm) throw "Password and Password Confirm is not same";
 
       final passwordHashed = PasswordHelper.hash(event.user.password);
       temp.add(event.user.copyWith(password: passwordHashed));
@@ -61,7 +61,7 @@ class AuthBloc extends HydratedBloc<AuthEvent, AuthState> {
       emit(state.copyWith(
         status: AuthStatus.success,
         users: temp,
-        message: "Berhasil Daftar",
+        message: "Signup Success",
       ));
     } catch (e) {
       emit(state.copyWith(

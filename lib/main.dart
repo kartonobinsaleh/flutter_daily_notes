@@ -31,6 +31,20 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
+      builder: (context, child) {
+        return BlocListener<AuthBloc, AuthState>(
+          listener: (context, state) {
+            final error = state.status == AuthStatus.error;
+
+            if (error) {
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(content: Text(state.message)),
+              );
+            }
+          },
+          child: child,
+        );
+      },
       theme: ThemeData(
         scaffoldBackgroundColor: Colors.white,
         appBarTheme: const AppBarTheme(backgroundColor: Colors.white),

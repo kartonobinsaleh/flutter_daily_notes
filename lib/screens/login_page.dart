@@ -33,15 +33,9 @@ class _LoginPageState extends State<LoginPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: BlocListener<AuthBloc, AuthState>(
-        listener: (context, state) {
+        listener: (_, state) {
           final success = state.status == AuthStatus.success;
-          final error = state.status == AuthStatus.error;
-
-          if (error) {
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(content: Text(state.message)),
-            );
-          }
+ 
 
           if (success) context.offAll(const HomePage());
         },
