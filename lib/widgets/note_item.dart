@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_todo_list/models/note.dart';
-import 'package:flutter_todo_list/widgets/custom_ilustration.dart';
+import 'package:flutter_daily_notes/models/note.dart';
+import 'package:flutter_daily_notes/widgets/custom_ilustration.dart';
 import 'package:intl/intl.dart';
 
 class NoteItem extends StatefulWidget {

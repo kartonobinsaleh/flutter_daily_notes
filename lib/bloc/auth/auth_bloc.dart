@@ -1,7 +1,7 @@
 import 'package:equatable/equatable.dart';
-import 'package:flutter_todo_list/models/user.dart';
-import 'package:flutter_todo_list/extensions/list.dart';
-import 'package:flutter_todo_list/helper/password.dart';
+import 'package:flutter_daily_notes/models/user.dart';
+import 'package:flutter_daily_notes/extensions/list.dart';
+import 'package:flutter_daily_notes/helper/password.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
 
 part 'auth_event.dart';

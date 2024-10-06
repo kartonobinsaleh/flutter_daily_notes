@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_todo_list/bloc/auth/auth_bloc.dart';
-import 'package:flutter_todo_list/models/user.dart';
-import 'package:flutter_todo_list/extensions/router.dart';
-import 'package:flutter_todo_list/screens/home_page.dart';
-import 'package:flutter_todo_list/screens/sign_up_page.dart';
-import 'package:flutter_todo_list/widgets/custom_account_text.dart';
-import 'package:flutter_todo_list/widgets/custom_button.dart';
-import 'package:flutter_todo_list/widgets/custom_ilustration.dart';
-import 'package:flutter_todo_list/widgets/custom_textfield.dart';
+import 'package:flutter_daily_notes/bloc/auth/auth_bloc.dart';
+import 'package:flutter_daily_notes/models/user.dart';
+import 'package:flutter_daily_notes/extensions/router.dart';
+import 'package:flutter_daily_notes/screens/home_page.dart';
+import 'package:flutter_daily_notes/screens/sign_up_page.dart';
+import 'package:flutter_daily_notes/widgets/custom_account_text.dart';
+import 'package:flutter_daily_notes/widgets/custom_button.dart';
+import 'package:flutter_daily_notes/widgets/custom_ilustration.dart';
+import 'package:flutter_daily_notes/widgets/custom_textfield.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -35,7 +35,6 @@ class _LoginPageState extends State<LoginPage> {
       body: BlocListener<AuthBloc, AuthState>(
         listener: (_, state) {
           final success = state.status == AuthStatus.success;
- 
 
           if (success) context.offAll(const HomePage());
         },
