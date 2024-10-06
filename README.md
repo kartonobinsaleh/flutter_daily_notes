@@ -18,7 +18,6 @@
 - **Path Provider**: Menyediakan akses ke lokasi penyimpanan.
 - **Crypto**: Untuk hashing dan enkripsi.
 - **Intl**: Untuk internasionalisasi dan format tanggal/waktu.
-- **Cupertino Icons**: Ikon untuk gaya iOS.
 - **Alarm**: Untuk mengatur alarm.
 
 ## Struktur Proyek
@@ -76,3 +75,32 @@
 Struktur proyek ini memisahkan dengan jelas antara model data, logika bisnis, dan tampilan, mengikuti praktik pengembangan yang baik.
 
 ## Dokumentasi Penggunaan Aplikasi
+
+### 2.1. Halaman Login
+Saat pertama kali membuka aplikasi, Anda akan diarahkan ke **Halaman Login**.  
+Pengguna yang sudah terdaftar dapat login menggunakan **email** dan **password** mereka.  
+Pengguna baru dapat mendaftar dengan menekan tombol **"Sign Up"** dan melengkapi form pendaftaran.
+
+### 2.2. Halaman Home
+Setelah login berhasil, Anda akan diarahkan ke **Halaman Utama (Home)**.  
+Di sini, Anda bisa melihat daftar catatan yang sudah dibuat.  
+Setiap catatan ditampilkan dalam bentuk **Note Item** yang berisi **judul** dan **konten singkat** catatan.
+
+### 2.3. Menambahkan Catatan Baru
+Untuk menambah catatan baru, tekan tombol **Add** di bagian bawah navigasi.  
+Anda akan diarahkan ke **Halaman Tambah Catatan (Add Note)**.  
+Isi **judul** dan **konten** catatan Anda, lalu tekan tombol **Save** untuk menyimpan catatan.
+
+### 2.4. Melihat dan Mengedit Catatan
+Untuk melihat detail catatan, tap pada catatan yang ada di daftar pada **Halaman Home**.  
+Anda akan diarahkan ke **Halaman Detail Catatan (Detail Note Page)**.  
+Di halaman ini, Anda bisa melihat **isi lengkap** catatan, serta opsi untuk **mengedit** atau **menghapus** catatan.  
+Untuk mengedit, tekan tombol **Edit**, lakukan perubahan pada catatan, lalu tekan **Save**.
+
+### 2.5. Pengaturan Alarm/Tugas
+Pada setiap catatan, Anda dapat menambahkan **pengingat** atau **alarm**.  
+Pilih catatan, tekan tombol **Set Alarm**, lalu atur waktu pengingat untuk catatan tersebut.  
+Pengingat ini akan memberi **notifikasi** saat waktunya tiba.
+
+### 2.6. Logout
+Untuk keluar dari aplikasi, tekan tombol **Profil** di bagian kanan atas layar, lalu pilih **Logout**.
