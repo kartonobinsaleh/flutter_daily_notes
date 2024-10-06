@@ -1,7 +1,5 @@
 # Struktur Proyek dan Dokumentasi Penggunaan Aplikasi
 
-![Screenshot](assets/images/preview.png)
-
 ## Deskripsi Proyek
 
 - **Nama Proyek**: `flutter_daily_notes`
@@ -21,6 +19,10 @@
 - **Crypto**: Untuk hashing dan enkripsi.
 - **Intl**: Untuk internasionalisasi dan format tanggal/waktu.
 - **Alarm**: Untuk mengatur alarm.
+
+## Preview Aplikasi
+
+![Screenshot](assets/images/preview.png)
 
 ## Struktur Proyek
 
