@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_todo_list/models/note.dart';
-import 'package:flutter_todo_list/widgets/bottom_navbar_add.dart';
-import 'package:flutter_todo_list/widgets/custom_textfield.dart';
-import 'package:flutter_todo_list/widgets/image_item.dart';
+import 'package:flutter_daily_notes/models/note.dart';
+import 'package:flutter_daily_notes/widgets/bottom_navbar_add.dart';
+import 'package:flutter_daily_notes/widgets/custom_textfield.dart';
+import 'package:flutter_daily_notes/widgets/image_item.dart';
 import 'package:intl/intl.dart';
 
 class AddNotePage extends StatefulWidget {

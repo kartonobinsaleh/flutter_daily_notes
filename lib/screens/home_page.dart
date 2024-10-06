@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_todo_list/bloc/auth/auth_bloc.dart';
-import 'package:flutter_todo_list/bloc/note/note_bloc.dart';
-import 'package:flutter_todo_list/models/note.dart';
-import 'package:flutter_todo_list/extensions/router.dart';
-import 'package:flutter_todo_list/screens/add_note_page.dart';
-import 'package:flutter_todo_list/screens/detail_note_page.dart';
-import 'package:flutter_todo_list/screens/login_page.dart';
-import 'package:flutter_todo_list/widgets/custom_ilustration.dart';
-import 'package:flutter_todo_list/widgets/note_item.dart';
+import 'package:flutter_daily_notes/bloc/auth/auth_bloc.dart';
+import 'package:flutter_daily_notes/bloc/note/note_bloc.dart';
+import 'package:flutter_daily_notes/models/note.dart';
+import 'package:flutter_daily_notes/extensions/router.dart';
+import 'package:flutter_daily_notes/screens/add_note_page.dart';
+import 'package:flutter_daily_notes/screens/detail_note_page.dart';
+import 'package:flutter_daily_notes/screens/login_page.dart';
+import 'package:flutter_daily_notes/widgets/custom_ilustration.dart';
+import 'package:flutter_daily_notes/widgets/note_item.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});

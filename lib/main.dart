@@ -1,9 +1,9 @@
 import 'package:alarm/alarm.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_todo_list/bloc/auth/auth_bloc.dart';
-import 'package:flutter_todo_list/bloc/note/note_bloc.dart';
-import 'package:flutter_todo_list/screens/home_page.dart';
+import 'package:flutter_daily_notes/bloc/auth/auth_bloc.dart';
+import 'package:flutter_daily_notes/bloc/note/note_bloc.dart';
+import 'package:flutter_daily_notes/screens/home_page.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
 import 'package:path_provider/path_provider.dart';
 

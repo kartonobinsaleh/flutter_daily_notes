@@ -1,10 +1,10 @@
 import 'package:alarm/alarm.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_todo_list/bloc/note/note_bloc.dart';
-import 'package:flutter_todo_list/models/note.dart';
-import 'package:flutter_todo_list/screens/add_note_page.dart';
-import 'package:flutter_todo_list/widgets/custom_button.dart';
+import 'package:flutter_daily_notes/bloc/note/note_bloc.dart';
+import 'package:flutter_daily_notes/models/note.dart';
+import 'package:flutter_daily_notes/screens/add_note_page.dart';
+import 'package:flutter_daily_notes/widgets/custom_button.dart';
 import 'package:intl/intl.dart';
 
 class DetailNotePage extends StatefulWidget {

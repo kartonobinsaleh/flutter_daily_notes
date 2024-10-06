@@ -1,6 +1,6 @@
 import 'package:equatable/equatable.dart';
-import 'package:flutter_todo_list/models/note.dart';
-import 'package:flutter_todo_list/extensions/list.dart';
+import 'package:flutter_daily_notes/models/note.dart';
+import 'package:flutter_daily_notes/extensions/list.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
 
 part 'note_event.dart';
