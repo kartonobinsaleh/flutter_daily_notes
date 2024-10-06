@@ -30,7 +30,7 @@ class ImageItem extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Image.asset(
-              'images/$index.png',
+              'assets/images/$index.png',
               fit: BoxFit.cover,
               height: 100,
               width: double.infinity,

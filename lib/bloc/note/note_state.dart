@@ -24,7 +24,7 @@ class NoteState extends Equatable {
   @override
   factory NoteState.fromJson(Map<String, dynamic> json) {
     try {
-      var listOfNotes = (json['note'] as List<dynamic>)
+      var listOfNotes = (json['notes'] as List<dynamic>)
           .map(
             (e) => Note.fromJson(e as Map<String, dynamic>),
           )
@@ -33,7 +33,7 @@ class NoteState extends Equatable {
       return NoteState(
         notes: listOfNotes,
         status: NoteStatus.values.firstWhere(
-          (element) => element.name.toString() == json['status'],
+          (element) => element.name == json['status'],
         ),
       );
     } catch (e) {
@@ -43,7 +43,7 @@ class NoteState extends Equatable {
 
   Map<String, dynamic> toJson() {
     return {
-      'note': notes,
+      'notes': notes.map((note) => note.toJson()).toList(),
       'status': status.name,
     };
   }

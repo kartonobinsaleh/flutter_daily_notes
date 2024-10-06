@@ -34,11 +34,11 @@ class Note {
 
   factory Note.fromJson(Map<String, dynamic> json) {
     return Note(
-      id: json['id'],
-      title: json['title'],
-      description: json['description'],
+      id: json['id'] ?? 0,
+      title: json['title'] ?? '',
+      description: json['description'] ?? '',
       date: json['date'] != null ? DateTime.parse(json['date']) : null,
-      image: json['image'] ?? '1',
+      image: json['image'] is int ? json['image'] : int.tryParse(json['image']) ?? 1,
     );
   }
 

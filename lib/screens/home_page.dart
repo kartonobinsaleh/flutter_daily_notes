@@ -3,12 +3,13 @@ import 'package:flutter/rendering.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_todo_list/bloc/auth/auth_bloc.dart';
 import 'package:flutter_todo_list/bloc/note/note_bloc.dart';
-import 'package:flutter_todo_list/data/models/note.dart';
+import 'package:flutter_todo_list/models/note.dart';
 import 'package:flutter_todo_list/extensions/router.dart';
 import 'package:flutter_todo_list/screens/add_note_page.dart';
+import 'package:flutter_todo_list/screens/detail_note_page.dart';
 import 'package:flutter_todo_list/screens/login_page.dart';
 import 'package:flutter_todo_list/widgets/custom_ilustration.dart';
-import 'package:flutter_todo_list/widgets/task_item.dart';
+import 'package:flutter_todo_list/widgets/note_item.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -32,7 +33,6 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    // print(context.read<NoteBloc>().state.notes.length);
     return PopScope(
       canPop: false,
       child: Scaffold(
@@ -47,16 +47,20 @@ class _HomePageState extends State<HomePage> {
               onPressed: () async {
                 final confirm = await showDialog(
                   context: context,
-                  builder: (context) => AlertDialog(title: const Text('Logout'), content: const Text('Are you sure you want to logout?'), actions: [
-                    TextButton(
-                      onPressed: () => Navigator.of(context).pop(false),
-                      child: const Text('No'),
-                    ),
-                    TextButton(
-                      onPressed: () => Navigator.of(context).pop(true),
-                      child: const Text('Yes'),
-                    ),
-                  ]),
+                  builder: (context) => AlertDialog(
+                    title: const Text('Logout'),
+                    content: const Text('Are you sure you want to logout?'),
+                    actions: [
+                      TextButton(
+                        onPressed: () => Navigator.of(context).pop(false),
+                        child: const Text('No'),
+                      ),
+                      TextButton(
+                        onPressed: () => Navigator.of(context).pop(true),
+                        child: const Text('Yes'),
+                      ),
+                    ],
+                  ),
                 );
 
                 if (confirm == true) context.read<AuthBloc>().add(AuthLogout());
@@ -79,7 +83,11 @@ class _HomePageState extends State<HomePage> {
               } else if (state.status == NoteStatus.success) {
                 if (state.notes.isEmpty) {
                   return const Center(
-                    child: CustomIlustration(imagePath: 'images/empty.png', width: 300, height: 300),
+                    child: CustomIlustration(
+                      imagePath: 'assets/images/empty.png',
+                      width: 300,
+                      height: 300,
+                    ),
                   );
                 }
                 return SafeArea(
@@ -105,7 +113,16 @@ class _HomePageState extends State<HomePage> {
                       itemCount: state.notes.length,
                       itemBuilder: (context, index) {
                         final note = state.notes[index];
-                        return TaskItem(note: note);
+                        return NoteItem(
+                          note: note,
+                          onPressed: () {
+                            Navigator.of(context).push(
+                              MaterialPageRoute(
+                                builder: (context) => DetailNotePage(note: note),
+                              ),
+                            );
+                          },
+                        );
                       },
                     ),
                   ),
@@ -120,11 +137,7 @@ class _HomePageState extends State<HomePage> {
           visible: show,
           child: FloatingActionButton(
             onPressed: () {
-              Navigator.of(context).push(
-                MaterialPageRoute(
-                  builder: (context) => const AddNotePage(),
-                ),
-              );
+              context.to(const AddNotePage());
             },
             backgroundColor: Theme.of(context).colorScheme.primary,
             shape: const CircleBorder(),
@@ -140,10 +153,16 @@ class _HomePageState extends State<HomePage> {
   }
 
   void userCheck() async {
-    await onload();
-    if (!mounted) return;
-    if (context.read<AuthBloc>().state.user.username.isEmpty) {
-      context.offAll(const LoginPage());
+    try {
+      await onload();
+      if (!mounted) return;
+      if (context.read<AuthBloc>().state.user.username.isEmpty) {
+        context.offAll(const LoginPage());
+      }
+    } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        content: Text(e.toString()),
+      ));
     }
   }
 

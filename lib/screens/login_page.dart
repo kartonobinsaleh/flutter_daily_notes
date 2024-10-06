@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_todo_list/bloc/auth/auth_bloc.dart';
-import 'package:flutter_todo_list/data/models/user.dart';
+import 'package:flutter_todo_list/models/user.dart';
 import 'package:flutter_todo_list/extensions/router.dart';
 import 'package:flutter_todo_list/screens/home_page.dart';
 import 'package:flutter_todo_list/screens/sign_up_page.dart';
@@ -53,7 +53,7 @@ class _LoginPageState extends State<LoginPage> {
                 const Padding(
                   padding: EdgeInsets.symmetric(horizontal: 10),
                   child: CustomIlustration(
-                    imagePath: 'images/schedule_meeting.png',
+                    imagePath: 'assets/images/schedule_meeting.png',
                     width: double.infinity,
                     height: 300,
                   ),

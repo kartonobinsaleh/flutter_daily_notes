@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_todo_list/bloc/auth/auth_bloc.dart';
-import 'package:flutter_todo_list/data/models/user.dart';
+import 'package:flutter_todo_list/models/user.dart';
 import 'package:flutter_todo_list/extensions/router.dart';
 import 'package:flutter_todo_list/screens/login_page.dart';
 import 'package:flutter_todo_list/widgets/custom_account_text.dart';
@@ -62,7 +62,7 @@ class _SignUpPageState extends State<SignUpPage> {
               children: [
                 const SizedBox(height: 20),
                 const CustomIlustration(
-                  imagePath: 'images/schedule_meeting.png',
+                  imagePath: 'assets/images/schedule_meeting.png',
                   height: 300,
                 ),
                 const SizedBox(height: 50),

@@ -1,25 +1,23 @@
+import 'package:alarm/alarm.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_todo_list/bloc/auth/auth_bloc.dart';
 import 'package:flutter_todo_list/bloc/note/note_bloc.dart';
-import 'package:flutter_todo_list/screens/add_note_page.dart';
-import 'package:flutter_todo_list/screens/detail_note_page.dart';
 import 'package:flutter_todo_list/screens/home_page.dart';
-import 'package:flutter_todo_list/screens/login_page.dart';
-import 'package:flutter_todo_list/screens/sign_up_page.dart';
-import 'package:flutter_todo_list/widgets/task_item.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
 import 'package:path_provider/path_provider.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await Alarm.init();
+
   HydratedBloc.storage = await HydratedStorage.build(
     storageDirectory: await getTemporaryDirectory(),
   );
   runApp(MultiBlocProvider(
     providers: [
-      BlocProvider(create: (_) => NoteBloc()..add(const LoadNotes())),
       BlocProvider(create: (_) => AuthBloc()),
+      BlocProvider(create: (_) => NoteBloc()..add(const LoadNotes())),
     ],
     child: const MyApp(),
   ));

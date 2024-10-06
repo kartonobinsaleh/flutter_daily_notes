@@ -44,4 +44,7 @@ class ClearNotes extends NoteEvent {
 
 class LoadNotes extends NoteEvent {
   const LoadNotes();
+
+  @override
+  List<Object?> get props => [];
 }

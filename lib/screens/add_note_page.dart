@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_todo_list/bloc/note/note_bloc.dart';
-import 'package:flutter_todo_list/data/models/note.dart';
-import 'package:flutter_todo_list/widgets/custom_button.dart';
+import 'package:flutter_todo_list/models/note.dart';
+import 'package:flutter_todo_list/widgets/bottom_navbar_add.dart';
 import 'package:flutter_todo_list/widgets/custom_textfield.dart';
 import 'package:flutter_todo_list/widgets/image_item.dart';
 import 'package:intl/intl.dart';
@@ -33,6 +31,7 @@ class _AddNotePageState extends State<AddNotePage> {
     if (widget.note != null) {
       _titleController.text = widget.note!.title;
       _descController.text = widget.note!.description;
+      tapIndex = widget.note!.image;
 
       selectedDate = widget.note!.date;
       final time = widget.note!.date;
@@ -56,151 +55,113 @@ class _AddNotePageState extends State<AddNotePage> {
   }
 
   Future<void> _selectTime(BuildContext context) async {
+    final newMinute = DateTime.now().add(const Duration(minutes: 1)).minute;
+
     final TimeOfDay? picked = await showTimePicker(
       context: context,
-      initialTime: TimeOfDay.now(),
+      initialTime: TimeOfDay.now().replacing(minute: newMinute),
     );
-    if (picked != null && picked != selectedTime) {
+
+    if (picked != null) {
       setState(() {
         selectedTime = picked;
+        selectedDate = selectedDate?.copyWith(
+          hour: picked.hour,
+          minute: picked.minute,
+        );
       });
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    final noteBloc = BlocProvider.of<NoteBloc>(context);
-
     return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Theme.of(context).colorScheme.primary,
+        foregroundColor: Colors.black87,
+        centerTitle: true,
+        title: Text(widget.note == null ? 'Add Note' : 'Update Note'),
+      ),
       body: SafeArea(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            CustomTextfield(
-              controller: _titleController,
-              focusNode: _titleFocusNode,
-              hintText: "Title",
-            ),
-            const SizedBox(height: 10),
-            CustomTextfield(
-              controller: _descController,
-              focusNode: _descFocusNode,
-              maxLines: 3,
-              hintText: "Description",
-            ),
-            const SizedBox(height: 20),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 10),
-              child: Row(
-                children: [
-                  Expanded(
-                    child: ElevatedButton(
-                      onPressed: () => _selectDate(context),
-                      child: Text(selectedDate == null ? 'Pick a Date' : DateFormat.yMMMd().format(selectedDate!)),
-                    ),
-                  ),
-                  const SizedBox(width: 10),
-                  Expanded(
-                    child: ElevatedButton(
-                      onPressed: () => _selectTime(context),
-                      child: Text(selectedTime == null ? 'Pick a Time' : selectedTime!.format(context)),
-                    ),
-                  ),
-                ],
+        child: Padding(
+          padding: const EdgeInsets.only(top: 10),
+          child: Column(
+            children: [
+              CustomTextfield(
+                controller: _titleController,
+                focusNode: _titleFocusNode,
+                hintText: "Title",
               ),
-            ),
-            const SizedBox(height: 10),
-            SizedBox(
-              height: 160,
-              child: ListView.builder(
-                itemCount: 8,
-                scrollDirection: Axis.horizontal,
-                itemBuilder: (context, index) {
-                  return ImageItem(
-                    index: index,
-                    isSelected: tapIndex == index,
-                    onTap: () {
-                      setState(() {
-                        tapIndex = index;
-                      });
-                    },
-                  );
-                },
+              const SizedBox(height: 10),
+              CustomTextfield(
+                controller: _descController,
+                focusNode: _descFocusNode,
+                maxLines: 3,
+                hintText: "Description",
               ),
-            ),
-            const SizedBox(height: 20),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 10),
-              child: Row(
-                children: [
-                  Expanded(
-                    child: CustomButton(
-                      text: widget.note == null ? "Add Task" : "Update Task",
-                      onPressed: () {
-                        try {
-                          if (_titleController.text.isEmpty) throw "Please enter a title";
-                          if (_descController.text.isEmpty) throw "Please enter a description";
-                          if (selectedDate != null && selectedTime == null) throw "Please pick a time";
-                          if (widget.note == null) {
-                            final newNote = Note(
-                              title: _titleController.text,
-                              description: _descController.text,
-                              date: selectedDate?.copyWith(hour: selectedTime?.hour, minute: selectedTime?.minute),
-                              image: tapIndex,
-                            );
-
-                            noteBloc.add(AddNote(newNote));
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              const SnackBar(
-                                content: Text("Task added successfully"),
-                              ),
-                            );
-                          } else {
-                            final updatedNote = widget.note!.copyWith(
-                              title: _titleController.text,
-                              description: _descController.text,
-                              date: selectedDate?.copyWith(hour: selectedTime?.hour, minute: selectedTime?.minute),
-                              image: widget.note?.image,
-                            );
-                            noteBloc.add(UpdateNote(
-                              noteId: widget.note!.id,
-                              updatedNote: updatedNote,
-                            ));
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              const SnackBar(
-                                content: Text("Task updated successfully"),
-                              ),
-                            );
-                          }
-                          _titleController.clear();
-                          _descController.clear();
-                          Navigator.pop(context);
-                        } catch (e) {
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            SnackBar(
-                              content: Text(e.toString()),
-                            ),
-                          );
-                        }
+              const SizedBox(height: 20),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 10),
+                child: Row(
+                  children: [
+                    Expanded(
+                      child: ElevatedButton(
+                        onPressed: () => _selectDate(context),
+                        child: Text(dateText),
+                      ),
+                    ),
+                    const SizedBox(width: 10),
+                    Expanded(
+                      child: ElevatedButton(
+                        onPressed: () => _selectTime(context),
+                        child: Text(timeText),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              const SizedBox(height: 10),
+              SizedBox(
+                height: 160,
+                child: ListView.builder(
+                  itemCount: 8,
+                  scrollDirection: Axis.horizontal,
+                  itemBuilder: (context, index) {
+                    return ImageItem(
+                      index: index,
+                      isSelected: tapIndex == index,
+                      onTap: () {
+                        setState(() {
+                          tapIndex = index;
+                        });
                       },
-                    ),
-                  ),
-                  const SizedBox(width: 10),
-                  Expanded(
-                    child: CustomButton(
-                      text: "Cancel",
-                      onPressed: () {
-                        Navigator.pop(context);
-                      },
-                      backgroundColor: Colors.red,
-                    ),
-                  ),
-                ],
+                    );
+                  },
+                ),
               ),
-            )
-          ],
+              const SizedBox(height: 20),
+            ],
+          ),
         ),
       ),
+      bottomNavigationBar: BottomNavbarAdd(
+        titleController: _titleController,
+        descController: _descController,
+        tapIndex: tapIndex,
+        selectedDate: selectedDate,
+        selectedTime: selectedTime,
+        note: widget.note,
+      ),
     );
+  }
+
+  String get dateText {
+    if (selectedDate == null) return 'Pick a Date';
+    return DateFormat.yMMMd().format(selectedDate!);
+  }
+
+  String get timeText {
+    if (selectedTime == null) return 'Pick a Time';
+    return DateFormat.Hm().format(selectedDate!);
   }
 }

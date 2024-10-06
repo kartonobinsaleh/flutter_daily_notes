@@ -1,7 +1,5 @@
-import 'dart:math';
-
 import 'package:equatable/equatable.dart';
-import 'package:flutter_todo_list/data/models/user.dart';
+import 'package:flutter_todo_list/models/user.dart';
 import 'package:flutter_todo_list/extensions/list.dart';
 import 'package:flutter_todo_list/helper/password.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';

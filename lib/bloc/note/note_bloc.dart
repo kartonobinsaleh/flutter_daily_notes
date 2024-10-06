@@ -1,5 +1,6 @@
 import 'package:equatable/equatable.dart';
-import 'package:flutter_todo_list/data/models/note.dart';
+import 'package:flutter_todo_list/models/note.dart';
+import 'package:flutter_todo_list/extensions/list.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
 
 part 'note_event.dart';
@@ -52,14 +53,27 @@ class NoteBloc extends HydratedBloc<NoteEvent, NoteState> {
         status: NoteStatus.loading,
       ),
     );
+
     try {
-      state.notes.remove(event.note);
-      emit(
-        state.copyWith(
-          notes: state.notes,
-          status: NoteStatus.success,
-        ),
-      );
+      final noteToRemove = state.notes.firstWhereOrNull((note) => note.id == event.note.id);
+
+      if (noteToRemove != null) {
+        List<Note> updatedNotes = List.from(state.notes);
+        updatedNotes.remove(noteToRemove); // Hapus note dari daftar
+
+        emit(
+          state.copyWith(
+            notes: updatedNotes,
+            status: NoteStatus.success,
+          ),
+        );
+      } else {
+        emit(
+          state.copyWith(
+            status: NoteStatus.error,
+          ),
+        );
+      }
     } catch (e) {
       emit(
         state.copyWith(
