@@ -1,11 +1,9 @@
 # Struktur Proyek dan Dokumentasi Penggunaan Aplikasi
 
-
-
 ## Deskripsi Proyek
 
-- **Nama Proyek**: `flutter_`
-- **Deskripsi**: Aplikasi Flutter untuk daftar tugas sederhana.
+- **Nama Proyek**: `flutter_daily_notes`
+- **Deskripsi**: Aplikasi Catatan untuk pencatatan sederhana dengan timer.
 - **Versi**: `1.0.0+1`
 - **SDK Dart**: `^3.5.3`
 
@@ -78,4 +76,3 @@
 Struktur proyek ini memisahkan dengan jelas antara model data, logika bisnis, dan tampilan, mengikuti praktik pengembangan yang baik.
 
 ## Dokumentasi Penggunaan Aplikasi
-
